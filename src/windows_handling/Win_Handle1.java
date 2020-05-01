@@ -1,0 +1,47 @@
+package windows_handling;
+
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Win_Handle1 {
+	
+	public static void main(String[] args) throws InterruptedException {
+		
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\SONY\\Desktop\\JARS\\chromedriver_win32\\chromedriver.exe");
+		WebDriver d=new ChromeDriver();
+		d.get("https://www.naukri.com/nlogin/login?msg=0&URL=https%3A%2F%2Fmy.naukri.com");
+		d.manage().window().maximize();
+		Thread.sleep(3000);
+		
+		d.findElement(By.xpath("//em[@class='icon fb']")).click();
+		
+		Set<String> allWind=d.getWindowHandles();
+		System.out.println(allWind.size());
+		Iterator<String> it=allWind.iterator();
+		
+		String p=it.next();
+		System.out.println("Parent window ID"+p);		
+		
+		String c=it.next();
+		System.out.println("Child window ID"+c);
+		
+		d.switchTo().window(c);		
+		System.out.println(d.getTitle());
+		d.findElement(By.name("email")).sendKeys("ajitmc@hf.com");
+		d.close();
+		
+		d.switchTo().window(p);
+		System.out.println(d.getTitle());
+	
+		
+		
+		
+		
+	}
+
+}
